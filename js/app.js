@@ -20,12 +20,13 @@ let images = [
   let clickedImages = [];
   let matches = 0;
   let gameOver = false;
-  let chances = 10;
+  let chances = 14;
 
   wrapper.innerHTML = `<h1>
-        <span>Urinishlar soni: <span class="chances">10</span></span>
-        <span>O'xshashlikalar soni: <span class="matches">0</span></span>
+        <span>Urinishlar soni: <span class="chances">${chances}</span></span>
+        <span>O'xshashlikalar soni: <span class="matches">${matches}</span></span>
       </h1>`;
+
   let matchesElement = document.querySelector(".matches");
   let chancesElement = document.querySelector(".chances");
 
@@ -90,10 +91,11 @@ let images = [
           }, 1000);
         }
 
+        let rematch = false;
+
         setTimeout(() => {
           if (chances === 0) {
             gameOver = true;
-            let rematch = false;
             if (matches === images.length / 2) {
               rematch = confirm("Yuttiz, tabriklar! Qayta o'nisizmi?");
             } else {
@@ -106,18 +108,18 @@ let images = [
                 }
               }, 1000);
             }
-
-            setTimeout(() => {
-              if (rematch) {
-                game();
-              }
-            }, 1000);
           }
 
           if (!gameOver && matches === images.length / 2) {
-            alert("Yuttiz");
+            rematch = confirm("Yuttiz, tabriklar! Qayta o'nisizmi?");
             gameOver = true;
           }
+
+          setTimeout(() => {
+            if (rematch) {
+              game();
+            }
+          }, 1000);
         }, 310);
       }
     });
